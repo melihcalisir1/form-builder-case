@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ConfirmModal from "../components/ConfirmModal";
+import FormResponsesModal from "../components/FormResponsesModal";
 
 export default function FormsListPage() {
     const [forms, setForms] = useState([]);
@@ -23,6 +24,7 @@ export default function FormsListPage() {
     }, []);
 
     const [confirm, setConfirm] = useState({ open: false, id: null });
+    const [responsesModal, setResponsesModal] = useState({ open: false, id: null, title: "" });
 
     const handleDelete = async (id) => {
         try {
@@ -78,6 +80,12 @@ export default function FormsListPage() {
                                         Düzenle
                                     </button>
                                     <button
+                                        onClick={() => setResponsesModal({ open: true, id: form._id, title: `${form.title} - Gönderilen Veriler`, schema: form.schema })}
+                                        className="btn btn-sm btn-outline-dark me-2"
+                                    >
+                                        Gönderilen Veriler
+                                    </button>
+                                    <button
                                         onClick={() => setConfirm({ open: true, id: form._id })}
                                         className="btn btn-sm btn-danger"
                                     >
@@ -98,6 +106,13 @@ export default function FormsListPage() {
                 cancelText="Vazgeç"
                 onConfirm={() => handleDelete(confirm.id)}
                 onClose={() => setConfirm({ open: false, id: null })}
+            />
+            <FormResponsesModal
+                open={responsesModal.open}
+                formId={responsesModal.id}
+                title={responsesModal.title}
+                schema={responsesModal.schema}
+                onClose={() => setResponsesModal({ open: false, id: null, title: "" })}
             />
         </div>
     );
