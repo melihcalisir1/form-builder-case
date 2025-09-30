@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ onLogin }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,8 +16,11 @@ export default function Login() {
                 password,
             });
 
-            localStorage.setItem("token", res.data.token); // ✨ token kaydediyoruz
+            localStorage.setItem("token", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
+
+            onLogin(); // App.js’deki state güncellensin
+            navigate("/forms"); // login sonrası yönlendirme
             setMsg("Giriş başarılı!");
         } catch (err) {
             setMsg(err.response?.data?.message || "Hata oluştu");

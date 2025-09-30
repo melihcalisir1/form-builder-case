@@ -80,4 +80,33 @@ router.get("/:id/responses", auth, async (req, res) => {
     }
 });
 
+// ✅ Formu güncelle
+router.put("/:id", auth, async (req, res) => {
+    try {
+        const { title, schema } = req.body;
+        const form = await Form.findOneAndUpdate(
+            { _id: req.params.id, userId: req.user.id }, // sadece sahibini güncelle
+            { title, schema },
+            { new: true }
+        );
+        if (!form) return res.status(404).json({ message: "Form bulunamadı" });
+        res.json(form);
+    } catch (err) {
+        console.error("Update form error:", err);
+        res.status(500).json({ message: "Form güncellenemedi" });
+    }
+});
+
+// ✅ Formu sil
+router.delete("/:id", auth, async (req, res) => {
+    try {
+        const form = await Form.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
+        if (!form) return res.status(404).json({ message: "Form bulunamadı" });
+        res.json({ message: "Form silindi" });
+    } catch (err) {
+        console.error("Delete form error:", err);
+        res.status(500).json({ message: "Form silinemedi" });
+    }
+});
+
 module.exports = router;
