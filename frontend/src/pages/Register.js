@@ -22,38 +22,40 @@ export default function Register() {
     };
 
     return (
-        <div className="container" style={{ maxWidth: "400px" }}>
-            <h3 className="mb-3">Register</h3>
-            {msg && <div className="alert alert-info">{msg}</div>}
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label>Kullanıcı Adı</label>
-                    <input
-                        className="form-control"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label>Şifre</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <button className="btn btn-primary w-100">Register</button>
-            </form>
+        <div className="auth-page">
+            <div className="app-card auth-card p-4">
+                <h3 className="mb-3">Kayıt Ol</h3>
+                {msg && <div className="alert alert-info">{msg}</div>}
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">Kullanıcı Adı</label>
+                        <input
+                            className="form-control"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Şifre</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button className="btn btn-primary w-100">Kayıt Ol</button>
+                </form>
+            </div>
         </div>
     );
 }

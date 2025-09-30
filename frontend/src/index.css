@@ -1,13 +1,165 @@
+:root {
+  /* Açık ve ferah tema */
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --panel-2: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #d97706;
+  --border: rgba(15, 23, 42, 0.08);
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background:
+    radial-gradient(800px 400px at 0% -10%, rgba(37,99,235,0.08), transparent 40%),
+    radial-gradient(700px 350px at 120% 0%, rgba(16,185,129,0.08), transparent 40%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Global containers */
+.container {
+  max-width: 1080px;
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.navbar .navbar-brand { letter-spacing: 0.2px; color: var(--text); }
+.navbar .btn { border-radius: 10px; }
+
+/* Card/Panel */
+.app-card {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.app-card .card-header { border-bottom: 1px solid var(--border); }
+
+/* Buttons */
+.btn {
+  border-radius: 10px !important;
+  border: 1px solid var(--border) !important;
+}
+.btn-primary { background: var(--primary-600) !important; }
+.btn-primary:hover { background: var(--primary-700) !important; }
+.btn-success { background: var(--success) !important; border-color: transparent !important; }
+.btn-danger { background: var(--danger) !important; border-color: transparent !important; }
+.btn-warning { background: var(--warning) !important; border-color: transparent !important; color: #111827 !important; }
+.btn-outline-light { color: var(--text) !important; border-color: var(--border) !important; }
+.btn-outline-light:hover { background: #eef2ff !important; }
+.btn-outline-dark { color: #0f172a !important; border-color: var(--border) !important; }
+
+/* Tables */
+.table {
+  color: var(--text);
+  border-color: var(--border);
+}
+.table thead th {
+  border-bottom-color: var(--border);
+  color: var(--muted);
+  font-weight: 600;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * { --bs-table-accent-bg: rgba(2,6,23,0.02); }
+
+/* Forms */
+.form-control {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+}
+.form-control:focus {
+  background: #ffffff;
+  border-color: rgba(37,99,235,0.35);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.18);
+  color: var(--text);
+}
+
+/* React Form Builder adjustments */
+.builder-wrapper {
+  margin-top: 12px;
+}
+.react-form-builder .stage {
+  background: #ffffff !important;
+  border: 1px dashed rgba(2,6,23,0.12) !important;
+  border-radius: 12px !important;
+}
+.react-form-builder .toolbar-header, .react-form-builder .toolbar { 
+  background: #f1f5f9 !important; 
+  border-color: var(--border) !important;
+}
+
+/* Builder: öğe başlığındaki sağdaki küçük aksiyon butonları daha net olsun */
+.react-form-builder .toolbar-header .btn,
+.react-form-builder .component-header .btn,
+.react-form-builder .float-right .btn,
+.react-form-builder .btn.btn-default {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important; /* slate-300 */
+  color: #0f172a !important; /* slate-900 */
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+.react-form-builder .toolbar-header .btn:hover,
+.react-form-builder .component-header .btn:hover,
+.react-form-builder .float-right .btn:hover,
+.react-form-builder .btn.btn-default:hover {
+  background: #eef2f7 !important;
+  border-color: #94a3b8 !important; /* slate-400 */
+}
+.react-form-builder .toolbar-header .btn i,
+.react-form-builder .component-header .btn i,
+.react-form-builder .float-right .btn i,
+.react-form-builder .btn.btn-default i,
+.react-form-builder .toolbar-header .btn .glyphicon {
+  color: #0f172a !important;
+}
+
+/* Glyphicons Bootstrap 5'te yok; görünür ikonlar ekleyelim */
+.react-form-builder .glyphicon { font-style: normal; font-weight: 600; }
+.react-form-builder .glyphicon:before { display: inline-block; font-family: inherit; line-height: 1; font-size: 13px; }
+.react-form-builder .glyphicon-trash:before { content: "🗑"; }
+.react-form-builder .glyphicon-duplicate:before { content: "⧉"; }
+.react-form-builder .glyphicon-edit:before { content: "✎"; }
+.react-form-builder .glyphicon-move:before { content: "⠿"; }
+.react-form-builder .glyphicon-chevron-up:before { content: "▴"; }
+.react-form-builder .glyphicon-chevron-down:before { content: "▾"; }
+.react-form-builder .btn,
+.react-form-builder .react-form-builder-toolbar .btn {
+  border-radius: 8px !important;
+}
+
+/* Auth pages */
+.auth-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth-card { width: 420px; }
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

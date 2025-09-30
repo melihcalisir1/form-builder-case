@@ -39,47 +39,57 @@ export default function FormsListPage() {
 
     return (
         <div className="container mt-4">
-            <h3>Formlarım</h3>
+            <div className="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                    <h3 className="mb-0">Formlarım</h3>
+                    <small className="text-muted">Oluşturduğun tüm formlar listelenir</small>
+                </div>
+                <button className="btn btn-primary" onClick={() => navigate('/builder')}>Yeni Form</button>
+            </div>
             {forms.length === 0 ? (
-                <p>Henüz form oluşturmadınız.</p>
+                <div className="app-card p-4">
+                    <p className="mb-0">Henüz form oluşturmadınız.</p>
+                </div>
             ) : (
-                <table className="table table-striped mt-3">
-                    <thead>
-                    <tr>
-                        <th>Başlık</th>
-                        <th>Oluşturulma</th>
-                        <th>İşlemler</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {forms.map((form) => (
-                        <tr key={form._id}>
-                            <td>{form.title}</td>
-                            <td>{new Date(form.createdAt).toLocaleString()}</td>
-                            <td>
-                                <Link
-                                    to={`/forms/${form._id}`}
-                                    className="btn btn-sm btn-primary me-2"
-                                >
-                                    Görüntüle
-                                </Link>
-                                <button
-                                    onClick={() => navigate(`/builder?id=${form._id}`)}
-                                    className="btn btn-sm btn-warning me-2"
-                                >
-                                    Düzenle
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(form._id)}
-                                    className="btn btn-sm btn-danger"
-                                >
-                                    Sil
-                                </button>
-                            </td>
+                <div className="app-card p-0 overflow-hidden">
+                    <table className="table table-striped mb-0">
+                        <thead>
+                        <tr>
+                            <th>Başlık</th>
+                            <th>Oluşturulma</th>
+                            <th className="text-end">İşlemler</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {forms.map((form) => (
+                            <tr key={form._id}>
+                                <td>{form.title}</td>
+                                <td>{new Date(form.createdAt).toLocaleString()}</td>
+                                <td className="text-end">
+                                    <Link
+                                        to={`/forms/${form._id}`}
+                                        className="btn btn-sm btn-outline-light me-2"
+                                    >
+                                        Görüntüle
+                                    </Link>
+                                    <button
+                                        onClick={() => navigate(`/builder?id=${form._id}`)}
+                                        className="btn btn-sm btn-warning me-2"
+                                    >
+                                        Düzenle
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(form._id)}
+                                        className="btn btn-sm btn-danger"
+                                    >
+                                        Sil
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );

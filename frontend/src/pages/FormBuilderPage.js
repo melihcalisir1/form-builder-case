@@ -66,35 +66,41 @@ export default function FormBuilderPage() {
 
     return (
         <div className="container mt-4">
-            <h3 className="mb-3">{formId ? "Formu Düzenle" : "Form Oluştur"}</h3>
+            <div className="app-card p-4">
+                <div className="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h3 className="mb-0">{formId ? "Formu Düzenle" : "Form Oluştur"}</h3>
+                        <small className="text-muted">Bileşenleri sürükleyip bırakın, ardından kaydedin</small>
+                    </div>
+                    <button className="btn btn-success" onClick={handleSave}>
+                        {formId ? "Güncelle" : "Kaydet"}
+                    </button>
+                </div>
 
-            <div className="mb-3">
-                <label>Form Başlığı</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-            </div>
-
-            <div className="builder-wrapper">
-                <div className="form-area">
-                    <ReactFormBuilder
-                        key={builderKey}
-                        data={formData}
-                        onPost={(data) => {
-                            const nextSchema = Array.isArray(data) ? data : (data?.task_data || []);
-                            console.log("Form JSON:", nextSchema);
-                            setFormData(nextSchema);
-                        }}
+                <div className="mb-3">
+                    <label className="form-label">Form Başlığı</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                     />
                 </div>
-            </div>
 
-            <button className="btn btn-success mt-3" onClick={handleSave}>
-                {formId ? "Güncelle" : "Kaydet"}
-            </button>
+                <div className="builder-wrapper">
+                    <div className="form-area">
+                        <ReactFormBuilder
+                            key={builderKey}
+                            data={formData}
+                            onPost={(data) => {
+                                const nextSchema = Array.isArray(data) ? data : (data?.task_data || []);
+                                console.log("Form JSON:", nextSchema);
+                                setFormData(nextSchema);
+                            }}
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

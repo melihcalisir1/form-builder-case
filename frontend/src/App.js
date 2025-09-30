@@ -22,23 +22,29 @@ function App() {
 
     return (
         <Router>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="container">
                     <Link className="navbar-brand fw-bold" to="/">Form Builder</Link>
 
-                    <div className="d-flex">
-                        {!isAuthenticated ? (
-                            <>
-                                <Link className="btn btn-outline-light me-2" to="/login">Login</Link>
-                                <Link className="btn btn-outline-light me-2" to="/register">Register</Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link className="btn btn-outline-success me-2" to="/builder">Form Oluştur</Link>
-                                <Link className="btn btn-outline-info me-2" to="/forms">Formlarım</Link>
-                                <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
-                            </>
-                        )}
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div className="collapse navbar-collapse" id="navMain">
+                        <div className="ms-auto d-flex gap-2">
+                            {!isAuthenticated ? (
+                                <>
+                                    <Link className="btn btn-outline-light" to="/login">Login</Link>
+                                    <Link className="btn btn-outline-light" to="/register">Register</Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link className="btn btn-primary" to="/builder">Form Oluştur</Link>
+                                    <Link className="btn btn-outline-light" to="/forms">Formlarım</Link>
+                                    <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
             </nav>

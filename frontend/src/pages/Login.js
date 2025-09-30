@@ -28,30 +28,32 @@ export default function Login({ onLogin }) {
     };
 
     return (
-        <div className="container" style={{ maxWidth: "400px" }}>
-            <h3 className="mb-3">Login</h3>
-            {msg && <div className="alert alert-info">{msg}</div>}
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label>Şifre</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <button className="btn btn-primary w-100">Login</button>
-            </form>
+        <div className="auth-page">
+            <div className="app-card auth-card p-4">
+                <h3 className="mb-3">Giriş Yap</h3>
+                {msg && <div className="alert alert-info">{msg}</div>}
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Şifre</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button className="btn btn-primary w-100">Giriş Yap</button>
+                </form>
+            </div>
         </div>
     );
 }

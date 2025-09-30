@@ -43,12 +43,19 @@ export default function FormDetailPage() {
 
     return (
         <div className="container mt-4">
-            <h2>{form.title}</h2>
-            <ReactFormGenerator
-                data={form.schema}
-                answer_data={{}}
-                onSubmit={handleSubmit}
-            />
+            <div className="app-card p-4">
+                <div className="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h2 className="mb-0">{form.title}</h2>
+                        <small className="text-muted">Formu doldurun ve gönderin</small>
+                    </div>
+                </div>
+                <ReactFormGenerator
+                    data={form.schema}
+                    answer_data={{}}
+                    onSubmit={handleSubmit}
+                />
+            </div>
         </div>
     );
 }
