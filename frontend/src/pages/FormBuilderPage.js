@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export default function FormBuilderPage() {
     const [formData, setFormData] = useState([]);
+    const [builderKey, setBuilderKey] = useState(0);
     const [formId, setFormId] = useState(null);
     const [title, setTitle] = useState("Benim Formum");
     const location = useLocation();
@@ -27,7 +28,9 @@ export default function FormBuilderPage() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setTitle(res.data.title);
-            setFormData(res.data.schema || []);
+            const initialSchema = Array.isArray(res.data?.schema) ? res.data.schema : [];
+            setFormData(initialSchema);
+            setBuilderKey((k) => k + 1); // Dropzone içeriğini zorla yeniden yükle
             console.log("Backend’den gelen schema:", res.data.schema);
         } catch (err) {
             console.error("Form yüklenemedi ❌", err);
@@ -78,20 +81,12 @@ export default function FormBuilderPage() {
             <div className="builder-wrapper">
                 <div className="form-area">
                     <ReactFormBuilder
-                        onLoad={() => {
-                            console.log("state’den gelen formData:", formData);
-
-                            // Eğer backend schema düz array ise, task_data içine koy
-                            return Promise.resolve([
-                                {
-                                    id: "loaded-data",
-                                    task_data: formData || []
-                                }
-                            ]);
-                        }}
+                        key={builderKey}
+                        data={formData}
                         onPost={(data) => {
-                            console.log("Form JSON:", data.task_data);
-                            setFormData(data.task_data);
+                            const nextSchema = Array.isArray(data) ? data : (data?.task_data || []);
+                            console.log("Form JSON:", nextSchema);
+                            setFormData(nextSchema);
                         }}
                     />
                 </div>
