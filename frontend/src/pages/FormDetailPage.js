@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ReactFormGenerator } from "react-form-builder2";
 import "react-form-builder2/dist/app.css";
+import ConfirmModal from "../components/ConfirmModal";
 
 export default function FormDetailPage() {
     const { id } = useParams(); // URL’den formId al
     const [form, setForm] = useState(null);
+    const [notify, setNotify] = useState({ open: false, variant: "success", title: "", message: "" });
 
     useEffect(() => {
         const fetchForm = async () => {
@@ -31,11 +33,10 @@ export default function FormDetailPage() {
                 { answers: data }, // cevaplar buradan geliyor
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            alert("Form başarıyla gönderildi ✅");
-            console.log("Saved response:", res.data);
+            setNotify({ open: true, variant: "success", title: "Gönderildi", message: "Form yanıtın başarıyla kaydedildi." });
         } catch (err) {
             console.error("Response save error:", err);
-            alert("Form gönderilirken hata ❌");
+            setNotify({ open: true, variant: "error", title: "Hata", message: "Form gönderilirken bir hata oluştu." });
         }
     };
 
@@ -56,6 +57,13 @@ export default function FormDetailPage() {
                     onSubmit={handleSubmit}
                 />
             </div>
+            <ConfirmModal
+                open={notify.open}
+                variant={notify.variant}
+                title={notify.title}
+                message={notify.message}
+                onClose={() => setNotify({ open: false, variant: "success", title: "", message: "" })}
+            />
         </div>
     );
 }

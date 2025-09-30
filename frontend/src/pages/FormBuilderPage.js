@@ -3,6 +3,7 @@ import { ReactFormBuilder } from "react-form-builder2";
 import "react-form-builder2/dist/app.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import ConfirmModal from "../components/ConfirmModal";
 
 export default function FormBuilderPage() {
     const [formData, setFormData] = useState([]);
@@ -37,6 +38,8 @@ export default function FormBuilderPage() {
         }
     };
 
+    const [notify, setNotify] = useState({ open: false, variant: "success", title: "", message: "" });
+
     const handleSave = async () => {
         try {
             const token = localStorage.getItem("token");
@@ -47,19 +50,18 @@ export default function FormBuilderPage() {
                     { title, schema: formData },
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
-                alert("Form güncellendi ✅");
+                setNotify({ open: true, variant: "success", title: "Başarılı", message: "Form güncellendi." });
             } else {
                 await axios.post(
                     "http://localhost:4000/api/forms",
                     { title, schema: formData },
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
-                alert("Form kaydedildi ✅");
+                setNotify({ open: true, variant: "success", title: "Başarılı", message: "Form kaydedildi." });
             }
-
-            navigate("/forms");
+            setTimeout(() => navigate("/forms"), 600);
         } catch (err) {
-            alert("Form kaydedilirken hata oluştu ❌");
+            setNotify({ open: true, variant: "error", title: "Hata", message: "Form kaydedilirken bir hata oluştu." });
             console.error(err);
         }
     };
@@ -101,6 +103,13 @@ export default function FormBuilderPage() {
                     </div>
                 </div>
             </div>
+            <ConfirmModal
+                open={notify.open}
+                variant={notify.variant}
+                title={notify.title}
+                message={notify.message}
+                onClose={() => setNotify({ open: false, variant: "success", title: "", message: "" })}
+            />
         </div>
     );
 }

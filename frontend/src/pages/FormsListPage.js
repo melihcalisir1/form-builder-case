@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import ConfirmModal from "../components/ConfirmModal";
 
 export default function FormsListPage() {
     const [forms, setForms] = useState([]);
@@ -21,19 +22,17 @@ export default function FormsListPage() {
         fetchForms();
     }, []);
 
-    const handleDelete = async (id) => {
-        if (!window.confirm("Bu formu silmek istediğinize emin misiniz?")) return;
+    const [confirm, setConfirm] = useState({ open: false, id: null });
 
+    const handleDelete = async (id) => {
         try {
             const token = localStorage.getItem("token");
             await axios.delete(`http://localhost:4000/api/forms/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            setForms(forms.filter((f) => f._id !== id)); // frontend listesinden çıkar
-            alert("Form silindi ✅");
+            setForms(forms.filter((f) => f._id !== id));
         } catch (err) {
             console.error("Form silinemedi ❌", err);
-            alert("Form silinemedi ❌");
         }
     };
 
@@ -79,7 +78,7 @@ export default function FormsListPage() {
                                         Düzenle
                                     </button>
                                     <button
-                                        onClick={() => handleDelete(form._id)}
+                                        onClick={() => setConfirm({ open: true, id: form._id })}
                                         className="btn btn-sm btn-danger"
                                     >
                                         Sil
@@ -91,6 +90,15 @@ export default function FormsListPage() {
                     </table>
                 </div>
             )}
+            <ConfirmModal
+                open={confirm.open}
+                title="Formu sil"
+                message="Bu formu silmek istediğine emin misin? Bu işlem geri alınamaz."
+                confirmText="Evet, sil"
+                cancelText="Vazgeç"
+                onConfirm={() => handleDelete(confirm.id)}
+                onClose={() => setConfirm({ open: false, id: null })}
+            />
         </div>
     );
 }
