@@ -304,8 +304,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
-.auth-card { width: 420px; }
+.auth-card { width: 420px; position: relative; z-index: 2; }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

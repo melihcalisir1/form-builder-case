@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import ParticlesBackground from "../components/ParticlesBackground";
 
 export default function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -15,14 +18,16 @@ export default function Register() {
                 email,
                 password,
             });
-            setMsg("Kayıt başarılı! Şimdi giriş yapabilirsin.");
+            setMsg("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...");
+            navigate("/login");
         } catch (err) {
             setMsg(err.response?.data?.message || "Hata oluştu");
         }
     };
 
     return (
-        <div className="auth-page">
+        <div className="auth-page" style={{position:'relative', zIndex:1}}>
+            <ParticlesBackground />
             <div className="app-card auth-card p-4">
                 <h3 className="mb-3">Kayıt Ol</h3>
                 {msg && <div className="alert alert-info">{msg}</div>}

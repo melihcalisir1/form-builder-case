@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ParticlesBackground from "../components/ParticlesBackground";
 
 export default function Login({ onLogin }) {
     const [email, setEmail] = useState("");
@@ -28,7 +29,8 @@ export default function Login({ onLogin }) {
     };
 
     return (
-        <div className="auth-page">
+        <div className="auth-page" style={{position:'relative', zIndex:1}}>
+            <ParticlesBackground />
             <div className="app-card auth-card p-4">
                 <h3 className="mb-3">Giriş Yap</h3>
                 {msg && <div className="alert alert-info">{msg}</div>}
