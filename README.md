@@ -61,7 +61,12 @@ npm start
 Frontend’i başlatın:
 ```bash
 cd ../frontend
+# Tercih 1
 npm install
+# Hata alırsanız (peer deps vs.) alternatifler:
+#  - npm ci              # package-lock.json'a göre temiz kurulum
+#  - npm install --legacy-peer-deps
+
 npm start
 ```
 Uygulama varsayılan olarak `http://localhost:3000` (frontend) ve `http://localhost:4000` (backend) üzerinde çalışır.
