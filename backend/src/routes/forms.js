@@ -1,53 +1,33 @@
-const express = require('express');
-const Form = require('../models/Form');
-const auth = require('../middleware/auth');
-
+const express = require("express");
 const router = express.Router();
+const Form = require("../models/Form");
+const { authMiddleware } = require("../middleware/auth");
 
-// Yeni form oluştur
-router.post('/', auth, async (req, res) => {
+// Create
+router.post("/", authMiddleware, async (req, res) => {
     try {
+        const { title, schema } = req.body;
         const form = new Form({
-            userId: req.user.userId,
-            title: req.body.title,
-            schema: req.body.schema
+            userId: req.user.id,   // ← artık garanti var
+            title,
+            schema,
         });
         await form.save();
         res.status(201).json(form);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error("Create form error:", err);
+        res.status(500).json({ message: err.message || "Form kaydedilemedi" });
     }
 });
 
-// Kullanıcının formlarını getir
-router.get('/', auth, async (req, res) => {
-    const forms = await Form.find({ userId: req.user.userId });
-    res.json(forms);
-});
-
-// Form güncelle
-router.put('/:id', auth, async (req, res) => {
+// List
+router.get("/", authMiddleware, async (req, res) => {
     try {
-        const form = await Form.findOneAndUpdate(
-            { _id: req.params.id, userId: req.user.userId },
-            { title: req.body.title, schema: req.body.schema },
-            { new: true }
-        );
-        if (!form) return res.status(404).json({ message: 'Form bulunamadı' });
-        res.json(form);
+        const forms = await Form.find({ userId: req.user.id }).sort({ createdAt: -1 });
+        res.json(forms);
     } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
-// Form sil
-router.delete('/:id', auth, async (req, res) => {
-    try {
-        const form = await Form.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
-        if (!form) return res.status(404).json({ message: 'Form bulunamadı' });
-        res.json({ message: 'Form silindi' });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error("List forms error:", err);
+        res.status(500).json({ message: "Formlar getirilemedi" });
     }
 });
 

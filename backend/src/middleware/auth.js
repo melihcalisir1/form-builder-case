@@ -1,17 +1,19 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-function auth(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+function authMiddleware(req, res, next) {
+    const authHeader = req.headers.authorization || "";
+    const token = authHeader.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "Token gerekli" });
 
-    if (!token) return res.status(401).json({ message: 'Token gerekli' });
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return res.status(403).json({ message: 'Geçersiz token' });
-
-        req.user = user; // { userId, role, iat, exp }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // payload: { userId, role, iat, exp }
+        // normalize ederek tek bir isim kullanalım:
+        req.user = { id: decoded.userId, role: decoded.role };
         next();
-    });
+    } catch (err) {
+        return res.status(403).json({ message: "Geçersiz token" });
+    }
 }
 
-module.exports = auth;
+module.exports = { authMiddleware };
