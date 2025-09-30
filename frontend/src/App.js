@@ -5,6 +5,9 @@ import Register from "./pages/Register";
 import FormBuilderPage from "./pages/FormBuilderPage";
 import FormsListPage from "./pages/FormsListPage";
 import FormDetailPage from "./pages/FormDetailPage";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminGuard from "./components/AdminGuard";
+import AdminUsersPage from "./pages/AdminUsersPage";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,6 +44,14 @@ function App() {
                                 <>
                                     <Link className="btn btn-primary" to="/builder">Form Oluştur</Link>
                                     <Link className="btn btn-outline-light" to="/forms">Formlarım</Link>
+                                    {(() => {
+                                        try {
+                                            const user = JSON.parse(localStorage.getItem('user') || 'null');
+                                            return user?.role === 'admin' ? (
+                                                <Link className="btn btn-outline-dark" to="/admin">Admin</Link>
+                                            ) : null;
+                                        } catch { return null; }
+                                    })()}
                                     <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
                                 </>
                             )}
@@ -57,6 +68,8 @@ function App() {
                     <Route path="/builder" element={<FormBuilderPage />} />
                     <Route path="/forms" element={<FormsListPage />} />
                     <Route path="/forms/:id" element={<FormDetailPage />} />
+                    <Route path="/admin" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
+                    <Route path="/admin/users" element={<AdminGuard><AdminUsersPage /></AdminGuard>} />
                 </Routes>
             </div>
         </Router>

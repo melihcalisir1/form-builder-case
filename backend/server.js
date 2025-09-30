@@ -3,8 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./src/db');
 
-const authRoutes = require('./src/routes/auth');   // ✨
-const formRoutes = require('./src/routes/forms'); // ✨ yeni ekledik
+const authRoutes = require('./src/routes/auth');
+const formRoutes = require('./src/routes/forms');
+const adminRoutes = require('./src/routes/admin');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);   // auth işlemleri
 app.use('/api/forms', formRoutes); // form CRUD işlemleri ✨
+app.use('/api/admin', adminRoutes); // admin endpoints
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', time: new Date().toISOString() });
