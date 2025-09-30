@@ -52,6 +52,7 @@ export default function FormsListPage() {
                     <p className="mb-0">Henüz form oluşturmadınız.</p>
                 </div>
             ) : (
+                <div className="card-gradient-wrap">
                 <div className="app-card p-0 overflow-hidden">
                     <table className="table table-striped mb-0">
                         <thead>
@@ -96,6 +97,7 @@ export default function FormsListPage() {
                         ))}
                         </tbody>
                     </table>
+                </div>
                 </div>
             )}
             <ConfirmModal

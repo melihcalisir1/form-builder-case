@@ -64,12 +64,110 @@ body {
 }
 .btn-primary { background: var(--primary-600) !important; }
 .btn-primary:hover { background: var(--primary-700) !important; }
+.btn:focus-visible { outline: 2px solid rgba(37,99,235,0.35); outline-offset: 2px; }
 .btn-success { background: var(--success) !important; border-color: transparent !important; }
 .btn-danger { background: var(--danger) !important; border-color: transparent !important; }
 .btn-warning { background: var(--warning) !important; border-color: transparent !important; color: #111827 !important; }
 .btn-outline-light { color: var(--text) !important; border-color: var(--border) !important; }
 .btn-outline-light:hover { background: #eef2ff !important; }
 .btn-outline-dark { color: #0f172a !important; border-color: var(--border) !important; }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 48px 12px; color: var(--muted); }
+.empty-state .title { font-weight: 600; color: var(--text); }
+
+/* Badges */
+.badge-soft { border: 1px solid var(--border); background: #f8fafc; color: var(--text); padding: 4px 8px; border-radius: 999px; }
+
+/* Gradient border wrapper for tables/cards */
+.card-gradient-wrap {
+  background: linear-gradient(135deg, #2563eb, #06b6d4, #16a34a);
+  padding: 2px;
+  border-radius: calc(var(--radius) + 2px);
+}
+.card-gradient-wrap > .app-card {
+  border: none;
+  border-radius: var(--radius);
+}
+
+/* Buttons inside gradient card: vibrant hovers */
+.card-gradient-wrap .btn { transition: all .2s ease; }
+.card-gradient-wrap .btn-outline-light {
+  background: #ecfdf5; /* light green */
+  color: #0f172a !important; /* metin aynı kalsın */
+  border-color: rgba(16,185,129,0.25) !important;
+}
+.card-gradient-wrap .btn-outline-light:hover {
+  background: linear-gradient(135deg,#56ab2f, #a8e063)!important; /* koyu yeşil gradient */
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+.card-gradient-wrap .btn-warning {
+  background: #fbbf24 !important; /* amber-400 */
+  color: #0f172a !important;
+}
+.card-gradient-wrap .btn-warning:hover {
+  background: linear-gradient(135deg, #f59e0b, #f97316) !important;
+  color: #ffffff !important;
+}
+.card-gradient-wrap .btn-outline-dark {
+  background: #ffffff;
+  color: #0f172a !important;
+}
+.card-gradient-wrap .btn-outline-dark:hover {
+  background: linear-gradient(135deg, #06b6d4, #22c55e);
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+.btn-outline-dark:hover {
+  background-color: #343030; /* koyu gri dolgu */
+  color: #fff !important;           /* yazı beyaz */
+  border-color: #333;    /* çerçeve de aynı renk */
+}
+
+.card-gradient-wrap .btn-danger:hover {
+  background: linear-gradient(135deg, #ef4444, #f97316) !important;
+  color: #ffffff !important;
+}
+
+/* AdminUsersPage – yeni görünüm */
+.user-list { list-style: none; margin: 0; padding: 0; }
+.user-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border); cursor: pointer; }
+.user-item:hover { background: #f8fafc; }
+.user-item .avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#56ab2f,#a8e063); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+.user-item.active { position: relative; background: #f0fdf4; }
+.user-item.active:before { content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background: linear-gradient(135deg,#56ab2f,#a8e063); }
+
+.form-card { background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 12px; height: 100%; transition: box-shadow .2s ease, transform .2s ease; }
+.form-card:hover { box-shadow: 0 12px 30px rgba(2,6,23,.1); transform: translateY(-2px); }
+.form-card .title { font-weight: 600; margin-bottom: 6px; }
+.form-card .meta { color: var(--muted); font-size: 13px; }
+
+/* AdminDashboard styling */
+.dashboard-hero { background: linear-gradient(135deg, rgba(37,99,235,.08), rgba(16,185,129,.08)); border: 1px solid var(--border); border-radius: 16px; }
+
+/* New compact tiles */
+.stat-tiles { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+.stat-tile { grid-column: span 12; background: rgba(255,255,255,0.75); backdrop-filter: blur(6px) saturate(140%); border: 1px solid var(--border); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; transition: box-shadow .2s ease, transform .2s ease; }
+.stat-tile:hover { box-shadow: 0 12px 30px rgba(2,6,23,.08); transform: translateY(-2px); }
+.stat-tile .icon-badge { width: 40px; height: 40px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+.icon-blue { background: linear-gradient(135deg,#06b6d4,#2563eb); }
+.icon-green { background: linear-gradient(135deg,#56ab2f,#a8e063); }
+.icon-purple { background: linear-gradient(135deg,#7c3aed,#06b6d4); }
+.stat-tile .label { color: var(--muted); font-size: 12px; }
+.stat-tile .value { font-size: 22px; font-weight: 800; line-height: 1.1; }
+
+@media (min-width: 768px) {
+  .stat-tile { grid-column: span 4; }
+}
+
+.link-tiles { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+.link-tile { grid-column: span 12; border: 1px solid var(--border); border-radius: 14px; padding: 16px; background: #fff; transition: transform .2s ease, box-shadow .2s ease; text-decoration: none; color: inherit; }
+.link-tile:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(2,6,23,.08); }
+.link-tile .title { font-weight: 600; }
+.link-tile .desc { color: var(--muted); font-size: 13px; }
+
+@media (min-width: 768px) { .link-tile { grid-column: span 4; } }
 
 /* Tables */
 .table {
@@ -101,6 +199,7 @@ body {
 .builder-wrapper {
   margin-top: 12px;
 }
+.builder-header { background: #ffffff; border: 1px solid var(--border); border-radius: 14px; }
 .react-form-builder .stage {
   background: #ffffff !important;
   border: 1px dashed rgba(2,6,23,0.12) !important;
@@ -109,6 +208,54 @@ body {
 .react-form-builder .toolbar-header, .react-form-builder .toolbar { 
   background: #f1f5f9 !important; 
   border-color: var(--border) !important;
+}
+
+/* React Form Generator (form görüntüleme) iyileştirmeleri */
+.react-form-builder-form .form-group { margin-bottom: 16px; }
+.react-form-builder-form .form-group > label,
+.react-form-builder-form .form-group > .control-label,
+.react-form-builder-form h4 {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.react-form-builder-form input[type="text"],
+.react-form-builder-form input[type="email"],
+.react-form-builder-form input[type="number"],
+.react-form-builder-form input[type="date"],
+.react-form-builder-form input[type="time"],
+.react-form-builder-form input[type="file"],
+.react-form-builder-form textarea,
+.react-form-builder-form select {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.react-form-builder-form input::placeholder,
+.react-form-builder-form textarea::placeholder { color: #94a3b8; }
+.react-form-builder-form input:focus,
+.react-form-builder-form textarea:focus,
+.react-form-builder-form select:focus {
+  background: #ffffff;
+  border-color: rgba(37,99,235,0.35);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.18);
+  color: var(--text);
+}
+.react-form-builder-form input[type="checkbox"],
+.react-form-builder-form input[type="radio"] { accent-color: var(--primary-600); }
+.react-form-builder-form .checkbox, .react-form-builder-form .radio { display: flex; align-items: center; gap: 8px; }
+
+/* Builder önizleme alanındaki inputları da uyumlu yapalım */
+.react-form-builder .preview input[type="text"],
+.react-form-builder .preview input[type="email"],
+.react-form-builder .preview input[type="number"],
+.react-form-builder .preview textarea,
+.react-form-builder .preview select {
+  background: #ffffff !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 10px !important;
 }
 
 /* Builder: öğe başlığındaki sağdaki küçük aksiyon butonları daha net olsun */

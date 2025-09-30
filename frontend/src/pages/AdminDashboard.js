@@ -16,34 +16,55 @@ export default function AdminDashboard() {
     }, []);
     return (
         <div className="container mt-4">
-            <div className="d-flex align-items-center justify-content-between mb-3">
-                <div>
-                    <h3 className="mb-0">Admin Panel</h3>
-                    <small className="text-muted">Özet ve yönetim sayfalarına hızlı erişim</small>
-                </div>
-                <div className="d-flex gap-2">
-                    <a className="btn btn-outline-dark" href="/admin/users">Kullanıcılar</a>
+            <div className="dashboard-hero app-card p-4 mb-3">
+                <div className="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 className="mb-1">Admin Panel</h3>
+                        <div className="text-muted">Özet ve yönetim sayfalarına hızlı erişim</div>
+                    </div>
+                    <div className="d-flex gap-2">
+                        <a className="btn btn-outline-dark" href="/admin/users">Kullanıcılar</a>
+                    </div>
                 </div>
             </div>
-            <div className="row g-3">
-                <div className="col-md-4">
-                    <div className="app-card p-3">
-                        <div className="text-muted">Toplam Form</div>
-                        <div className="fs-3 fw-bold">{stats.formsCount}</div>
+
+            <div className="stat-tiles mb-3">
+                <div className="stat-tile">
+                    <div className="icon-badge icon-blue">F</div>
+                    <div>
+                        <div className="label">Toplam Form</div>
+                        <div className="value">{stats.formsCount}</div>
                     </div>
                 </div>
-                <div className="col-md-4">
-                    <div className="app-card p-3">
-                        <div className="text-muted">Toplam Cevap</div>
-                        <div className="fs-3 fw-bold">{stats.responsesCount}</div>
+                <div className="stat-tile">
+                    <div className="icon-badge icon-green">C</div>
+                    <div>
+                        <div className="label">Toplam Cevap</div>
+                        <div className="value">{stats.responsesCount}</div>
                     </div>
                 </div>
-                <div className="col-md-4">
-                    <div className="app-card p-3">
-                        <div className="text-muted">Kullanıcı</div>
-                        <div className="fs-3 fw-bold">{stats.usersCount}</div>
+                <div className="stat-tile">
+                    <div className="icon-badge icon-purple">U</div>
+                    <div>
+                        <div className="label">Kullanıcı</div>
+                        <div className="value">{stats.usersCount}</div>
                     </div>
                 </div>
+            </div>
+
+            <div className="link-tiles">
+                <a href="/admin/users" className="link-tile">
+                    <div className="title">Kullanıcılar</div>
+                    <div className="desc">Kullanıcıları görüntüle ve formlarına eriş</div>
+                </a>
+                <a href="/forms" className="link-tile">
+                    <div className="title">Formlar</div>
+                    <div className="desc">Tüm formları yönet</div>
+                </a>
+                <a href="/builder" className="link-tile">
+                    <div className="title">Yeni Form</div>
+                    <div className="desc">Hızlıca form oluştur</div>
+                </a>
             </div>
         </div>
     );
